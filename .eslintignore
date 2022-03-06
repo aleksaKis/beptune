@@ -1,0 +1,11 @@
+bin
+node_modules
+data
+
+package.json
+tsconfig.json
+yarn.lock
+
+.eslint.json
+.gitignore
+.idea

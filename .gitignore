@@ -1,0 +1,6 @@
+bin
+node_modules
+data
+src/secure/spotify.ts
+tasks.md
+.idea
