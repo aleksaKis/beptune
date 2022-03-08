@@ -1,9 +1,7 @@
 import arg, { Spec } from "arg";
-import { showError, showWarning } from "./logging";
-
-const enum ERROR_MESSAGES {
-  EXCLUDED_PATH = "Please provide path to music directory",
-}
+import { showInfo } from "./logging";
+import { DEFAULT_DATA_PATH } from "../utils/constants";
+import { ERROR_MESSAGES } from "./error";
 
 export enum SpecificationKeys {
   HELP = "--help",
@@ -27,8 +25,12 @@ export const args = arg(SPECIFICATION);
 export const validateArguments = (
   args: arg.Result<typeof SPECIFICATION>
 ): void => {
-  if (!args[SpecificationKeys.PATH]) {
-    showWarning(ERROR_MESSAGES.EXCLUDED_PATH);
+  if (args[SpecificationKeys.PATH]) {
+    showInfo(ERROR_MESSAGES.EXCLUDED_PATH);
     // throw new Error();
   }
+};
+
+export const getArgumentPath = (): string => {
+  return args[SpecificationKeys.PATH] || args["_"][0] || DEFAULT_DATA_PATH;
 };

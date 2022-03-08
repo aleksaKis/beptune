@@ -2,7 +2,7 @@ const ACCESS_TOKEN_KEY = "access_token";
 
 export const persistAccessToken = (token: string) => {
   try {
-    // @TODO save token to local database or env
+    // @TODO save token
   } catch (error) {
     console.warn(error);
   }

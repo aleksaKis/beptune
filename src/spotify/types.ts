@@ -1,7 +1,7 @@
 export interface MetaData {
   artist: string;
   name: string;
-  year: string;
+  date: string;
 }
 
 export interface SpotifyAlbum {

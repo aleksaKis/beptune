@@ -29,7 +29,7 @@ const extractAlbumData = (data: any): SpotifyAlbum => {
   const metadata = {
     artist: data.artists[0].name,
     name: data.name,
-    year: data.realse_date,
+    date: data.release_date,
   };
   return { url, metadata };
 };
