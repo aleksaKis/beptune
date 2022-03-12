@@ -1,37 +1,50 @@
 #!/usr/bin/env node
-import { parseDirectory } from "./parser";
+import { parseDirectory, Playlist } from "./parser";
 import {
-  promptForAlbum,
+  prompt,
   openAlbumInBrowser,
   introduce,
-  getArgumentPath,
+  getDirectoryPath,
   logMetadata,
-  getSearchText,
   getScanningText,
+  showError,
+  showInfo,
 } from "./cli";
 import { fetchSpotifyAlbum } from "./spotify";
 import { createSpinner } from "nanospinner";
+import { ERROR_MESSAGES } from "./cli/error";
+import { MetaData } from "./spotify/types";
 
 export const APP = "Tunlink";
 
-async function main() {
+const openAlbum = async (metadata: MetaData, url: string) => {
+  logMetadata(metadata, url);
+  showInfo("(CRTL + C or 'quit') to quit", "magenta");
+  url && (await openAlbumInBrowser(url));
+};
+
+const promptAndSearch = async (playlist: Playlist): Promise<void> => {
+  const chosenAlbum = await prompt(playlist);
+  if (!chosenAlbum || !chosenAlbum.value) return;
+  const spotifyData = await fetchSpotifyAlbum(chosenAlbum.value);
+  if (!spotifyData || !spotifyData?.url) {
+    showError(ERROR_MESSAGES.SEARCH_FAIL);
+    return;
+  }
+  const { metadata, url } = spotifyData;
+  await openAlbum(metadata, url);
+
+  await promptAndSearch(playlist);
+};
+
+const main = async (): Promise<void> => {
   introduce();
-  const path = getArgumentPath();
+  const path = getDirectoryPath();
   const spinner = createSpinner(getScanningText(path)).start();
   const playlist = parseDirectory(path);
   spinner.success();
-  const chosenAlbum = await promptForAlbum(playlist);
-  if (!chosenAlbum || !chosenAlbum.value) {
-    return;
-  }
-  spinner.update({ text: getSearchText(chosenAlbum.value) });
-  const spotifyData = await fetchSpotifyAlbum(chosenAlbum.value);
-  if (!spotifyData || !spotifyData?.url) {
-    return;
-  }
+  await promptAndSearch(playlist);
   spinner.success();
-  logMetadata(spotifyData.metadata, spotifyData.url);
-  spotifyData && (await openAlbumInBrowser(spotifyData.url));
-}
+};
 
 main().then();

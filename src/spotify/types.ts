@@ -4,7 +4,17 @@ export interface MetaData {
   date: string;
 }
 
-export interface SpotifyAlbum {
+export interface ExtractedAlbumData {
   url: string;
   metadata: MetaData;
+}
+
+export interface Album {
+  external_urls: {
+    spotify: string;
+  };
+  name: string;
+  date: string;
+  artists: { name: string }[];
+  release_date: string;
 }

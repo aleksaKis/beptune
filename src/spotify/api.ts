@@ -1,6 +1,6 @@
 import { gainAccessToken } from "./auth";
 import axios from "axios";
-import { SpotifyAlbum } from "./types";
+import { Album, ExtractedAlbumData } from "./types";
 import { showError } from "../cli";
 
 const SEARCH_BASE_URL = "https://api.spotify.com/v1/search";
@@ -8,7 +8,7 @@ const TRACK_LIMIT = 1;
 
 export const fetchSpotifyAlbum = async (
   name: string
-): Promise<SpotifyAlbum | null> => {
+): Promise<ExtractedAlbumData | null> => {
   const token = await gainAccessToken();
   try {
     const axiosResponse = await axios.get(
@@ -16,15 +16,14 @@ export const fetchSpotifyAlbum = async (
       { headers: { accept: "application/json" } }
     );
     const firstItemData = axiosResponse.data.albums.items[0];
-    return extractAlbumData(firstItemData);
+    return firstItemData && extractAlbumData(firstItemData);
   } catch (error) {
     showError(error);
   }
   return null;
 };
 
-// @Todo fix any, add spotify search response type
-const extractAlbumData = (data: any): SpotifyAlbum => {
+const extractAlbumData = (data: Album): ExtractedAlbumData => {
   const url = data.external_urls.spotify;
   const metadata = {
     artist: data.artists[0].name,

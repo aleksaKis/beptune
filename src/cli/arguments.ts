@@ -27,10 +27,9 @@ export const validateArguments = (
 ): void => {
   if (args[SpecificationKeys.PATH]) {
     showInfo(ERROR_MESSAGES.EXCLUDED_PATH);
-    // throw new Error();
   }
 };
 
-export const getArgumentPath = (): string => {
+export const getDirectoryPath = (): string => {
   return args[SpecificationKeys.PATH] || args["_"][0] || DEFAULT_DATA_PATH;
 };

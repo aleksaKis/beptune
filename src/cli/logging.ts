@@ -1,4 +1,4 @@
-import chalk from "chalk";
+import chalk, { ForegroundColor } from "chalk";
 import { APP } from "../index";
 import { MetaData } from "../spotify/types";
 
@@ -21,17 +21,19 @@ export const introduce = () => {
 };
 
 export const showError = (error: unknown) => {
-  log(chalk.hex(theme.error)(error));
+  log(chalk.hex(theme.error)(`Error - ${error}`));
 };
 
-export const showInfo = (message: string) => {
-  log(chalk.hex(theme.info)(message));
+export const showInfo = (message: string, color?: typeof ForegroundColor) => {
+  color ? log(chalk[color](message)) : log(chalk.hex(theme.info)(message));
 };
 
 export const logMetadata = (metadata: MetaData, url: string): void => {
-  showInfo(`Opening: ${chalk.underline.hex(theme.link)(url)}
-${metadata?.artist}: ${metadata?.name} - ${metadata?.date}
-`);
+  showInfo(
+    `Opening: ${chalk.underline.hex(theme.link)(url)} ${metadata?.artist}: ${
+      metadata?.name
+    } - ${metadata?.date}`
+  );
 };
 
 export const getSearchText = (album: string): string => {
@@ -39,5 +41,5 @@ export const getSearchText = (album: string): string => {
 };
 
 export const getScanningText = (path: string): string => {
-  return `Scanning folders in: ${path}`;
+  return `Scanning ${path}...`;
 };
