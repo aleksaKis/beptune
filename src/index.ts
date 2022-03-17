@@ -10,10 +10,9 @@ import {
   showError,
   showInfo,
 } from "./cli";
-import { fetchSpotifyAlbum } from "./spotify";
+import { fetchSpotifyAlbum, MetaData } from "./spotify";
 import { createSpinner } from "nanospinner";
-import { ERROR_MESSAGES } from "./cli/error";
-import { MetaData } from "./spotify/types";
+import { ERROR_MESSAGES } from "./cli";
 
 export const APP = "Tunlink";
 
@@ -33,7 +32,6 @@ const promptAndSearch = async (playlist: Playlist): Promise<void> => {
   }
   const { metadata, url } = spotifyData;
   await openAlbum(metadata, url);
-
   await promptAndSearch(playlist);
 };
 
