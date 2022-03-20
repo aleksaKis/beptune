@@ -1,13 +1,13 @@
-import chalk, { ForegroundColor } from "chalk";
-import { APP } from "../index";
-import { MetaData } from "../spotify/types";
+import chalk, { ForegroundColor } from 'chalk';
+import { APP } from '../index';
+import { MetaData } from '../spotify';
 
 const theme = {
-  main: "#6fe872",
-  bg: "#17292d",
-  error: "#ff3b3b",
-  info: "#ffe697",
-  link: "#4da9f6",
+  main: '#6fe872',
+  bg: '#17292d',
+  error: '#ff3b3b',
+  info: '#ffe697',
+  link: '#4da9f6',
 };
 
 const log = console.log;
@@ -37,7 +37,7 @@ export const logMetadata = (metadata: MetaData, url: string): void => {
 };
 
 export const getSearchText = (album: string): string => {
-  return `Searching for ${album} on ${chalk.green("Spotify")} `;
+  return `Searching for ${album} on ${chalk.green('Spotify')} `;
 };
 
 export const getScanningText = (path: string): string => {

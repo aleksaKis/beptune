@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { parseDirectory, Playlist } from "./parser";
+import { parseDirectory, Playlist } from './parser';
 import {
   prompt,
   openAlbumInBrowser,
@@ -9,16 +9,16 @@ import {
   getScanningText,
   showError,
   showInfo,
-} from "./cli";
-import { fetchSpotifyAlbum, MetaData } from "./spotify";
-import { createSpinner } from "nanospinner";
-import { ERROR_MESSAGES } from "./cli";
+} from './cli';
+import { fetchSpotifyAlbum, MetaData } from './spotify';
+import { createSpinner } from 'nanospinner';
+import { ERROR_MESSAGES } from './cli';
 
-export const APP = "Tunlink";
+export const APP = 'Tunlink';
 
 const openAlbum = async (metadata: MetaData, url: string) => {
   logMetadata(metadata, url);
-  showInfo("(CRTL + C or 'quit') to quit", "magenta");
+  showInfo('CRTL + C to quit', 'magenta');
   url && (await openAlbumInBrowser(url));
 };
 

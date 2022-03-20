@@ -1,5 +1,5 @@
-import prompts from "prompts";
-import { Playlist } from "../parser";
+import prompts from 'prompts';
+import { Playlist } from '../parser';
 
 /**
  * Prompt user for desired album from playlist and return promise with picked answer
@@ -9,9 +9,9 @@ export const prompt = (
   playlist: string[]
 ): Promise<prompts.Answers<string>> => {
   return prompts({
-    type: "autocomplete",
-    name: "value",
-    message: "Pick an album: ",
+    type: 'autocomplete',
+    name: 'value',
+    message: 'Pick an album: ',
     choices: getChooses(playlist),
   });
 };
