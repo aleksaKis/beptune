@@ -11,7 +11,7 @@
     "prettify": "prettier --write ."
   },
   "bin": {
-    "tunlink": "./bin/index.js"
+    "beptune": "./bin/index.js"
   },
   "keywords": [
     "cli",
