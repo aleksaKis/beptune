@@ -3,8 +3,8 @@ import { APP } from '../index';
 import { MetaData } from '../spotify';
 
 const theme = {
-  main: '#6fe872',
-  bg: '#17292d',
+  main: '#91deff',
+  bg: '#0c1417',
   error: '#ff3b3b',
   info: '#ffe697',
   link: '#4da9f6',
@@ -30,14 +30,9 @@ export const showInfo = (message: string, color?: typeof ForegroundColor) => {
 
 export const logMetadata = (metadata: MetaData, url: string): void => {
   showInfo(
-    `Opening: ${chalk.underline.hex(theme.link)(url)} ${metadata?.artist}: ${
-      metadata?.name
-    } - ${metadata?.date}`
+    `Opening: ${chalk.underline.hex(theme.link)(url)}
+${metadata?.artist}: ${metadata?.name} - ${metadata?.date}`
   );
-};
-
-export const getSearchText = (album: string): string => {
-  return `Searching for ${album} on ${chalk.green('Spotify')} `;
 };
 
 export const getScanningText = (path: string): string => {

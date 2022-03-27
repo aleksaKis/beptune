@@ -1,5 +1,5 @@
 import open from 'open';
 
-export const openAlbumInBrowser = async (url: string): Promise<void> => {
+export const openInBrowser = async (url: string): Promise<void> => {
   await open(url);
 };

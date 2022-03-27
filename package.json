@@ -1,7 +1,7 @@
 {
-  "name": "tunlink",
-  "version": "0.0.3",
-  "description": "Browse local music albums and link to Spotify",
+  "name": "beptune",
+  "version": "1.0.0",
+  "description": "Boost local digital music library",
   "main": "bin/index.js",
   "scripts": {
     "start": "ts-node src/index.ts",

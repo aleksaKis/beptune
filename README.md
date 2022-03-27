@@ -1,7 +1,7 @@
 # Beptune :headphones:
-_____
-> Search for albums on Spotify from your local directory
 
+> ### *Search for albums on Spotify from your digital music library*
+<br>
 
 Beptune is an CLI album parser for your locally stored music albums.
 It searches spotify for desired album from your collection
@@ -12,7 +12,7 @@ npm install beptune -g
 ```
 ## :guitar: Usage
 
-###Navigate to folder
+### Navigate to folder
 ```shell
 cd ~/Music
 beptune

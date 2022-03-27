@@ -1,19 +1,24 @@
-import prompts from 'prompts';
+import prompts, { PromptObject } from 'prompts';
 import { Playlist } from '../parser';
 
 /**
- * Prompt user for desired album from playlist and return promise with picked answer
+ * Prompts user for desired album from playlist and invokes onSubmit callback when album is selected
  * @param {Array} playlist array of album titles
+ * @param onSubmit
  **/
 export const prompt = (
-  playlist: string[]
+  playlist: string[],
+  onSubmit: (prompt: PromptObject, answer: string, answers: string[]) => void
 ): Promise<prompts.Answers<string>> => {
-  return prompts({
-    type: 'autocomplete',
-    name: 'value',
-    message: 'Pick an album: ',
-    choices: getChooses(playlist),
-  });
+  return prompts(
+    {
+      type: 'autocomplete',
+      name: 'value',
+      message: 'Pick an album: ',
+      choices: getChooses(playlist),
+    },
+    { onSubmit }
+  );
 };
 
 const getChooses = (playlist: Playlist): prompts.Choice[] => {

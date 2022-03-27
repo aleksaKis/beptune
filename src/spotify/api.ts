@@ -1,6 +1,6 @@
 import { getAccessToken } from './auth';
 import axios from 'axios';
-import { Album, ExtractedAlbumData } from './types';
+import { Album, SpotifyAlbumResponse } from './types';
 import { showError } from '../cli';
 import { extractAlbumMetaData, SearchMetaData } from '../parser';
 
@@ -9,7 +9,7 @@ const TRACK_LIMIT = 1;
 
 export const fetchSpotifyAlbum = async (
   name: string
-): Promise<ExtractedAlbumData | null> => {
+): Promise<SpotifyAlbumResponse | null> => {
   const token = await getAccessToken();
   const searchQuery = enhanceSearchQuery(extractAlbumMetaData(name));
   try {
@@ -32,7 +32,7 @@ const enhanceSearchQuery = (data: SearchMetaData): string => {
   }`;
 };
 
-const extractAlbumData = (data: Album): ExtractedAlbumData => {
+const extractAlbumData = (data: Album): SpotifyAlbumResponse => {
   const url = data.external_urls.spotify;
   const metadata = {
     artist: data.artists[0].name,
