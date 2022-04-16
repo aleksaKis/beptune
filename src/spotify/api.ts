@@ -1,7 +1,7 @@
 import { getAccessToken } from './auth';
 import axios from 'axios';
 import { Album, SpotifyAlbumResponse } from './types';
-import { showError } from '../cli';
+import { ERROR_MESSAGES, showError } from '../cli';
 import { extractAlbumMetaData, SearchMetaData } from '../parser';
 
 const SEARCH_BASE_URL = 'https://api.spotify.com/v1/search';
@@ -17,10 +17,10 @@ export const fetchSpotifyAlbum = async (
       `${SEARCH_BASE_URL}${searchQuery}&limit=${TRACK_LIMIT}&access_token=${token}`,
       { headers: { accept: 'application/json' } }
     );
-    const firstItemData = axiosResponse.data.albums.items[0];
+    const firstItemData: Album = axiosResponse.data.albums.items[0];
     return firstItemData && extractAlbumData(firstItemData);
   } catch (error) {
-    showError(error);
+    showError(error || ERROR_MESSAGES.SEARCH_FAIL);
   }
   return null;
 };

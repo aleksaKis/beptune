@@ -1,6 +1,6 @@
 import arg, { Spec } from 'arg';
 
-const DEFAULT_DATA_PATH = '.';
+export const DEFAULT_DATA_PATH = '.';
 
 export enum SpecificationKeys {
   HELP = '--help',
@@ -19,7 +19,7 @@ const SPECIFICATION: Spec = {
   [SpecificationKeys.P]: SpecificationKeys.PATH,
 };
 
-export const args = arg(SPECIFICATION);
+export const args = arg(SPECIFICATION, { permissive: true });
 
 export const getDirectoryPath = (): string => {
   return args[SpecificationKeys.PATH] || args['_'][0] || DEFAULT_DATA_PATH;

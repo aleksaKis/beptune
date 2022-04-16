@@ -16,40 +16,49 @@ const forbiddenFolders = [
   'artwork',
 ];
 
-const isForbidden = (directory: string): boolean =>
-  forbiddenFolders.indexOf(directory.toLocaleLowerCase()) !== -1;
+const isForbidden = (directory: string): boolean => {
+  return forbiddenFolders.indexOf(directory.toLocaleLowerCase()) !== -1;
+};
 
-const readDirectory = (
-  directoryPath: string,
-  playlist: string[]
-): Playlist | undefined => {
-  try {
-    const dir = fs.readdirSync(directoryPath, { withFileTypes: true });
-    if (!dir || !dir.length) return;
+const getSubdirectories = (directory: fs.Dirent[]): string[] => {
+  return directory
+    .filter((d) => d.isDirectory() && !isForbidden(d.name))
+    .map((item) => item.name);
+};
 
-    for (const item of dir) {
-      if (!item.isDirectory() || isForbidden(item.name)) continue;
-
-      playlist.push(item.name);
-      readDirectory(path.join(directoryPath, item.name), playlist);
-    }
-    return [];
-  } catch (error) {
-    if (error instanceof Error) {
-      showError(error?.message || ERROR_MESSAGES.INVALID_DIRECTORY);
-    }
+const parserError = (error?: unknown): Error => {
+  if (error instanceof Error) {
+    showError(error?.message || ERROR_MESSAGES.PARSER_FAIL);
   }
+  return new Error(ERROR_MESSAGES.PARSER_FAIL);
 };
 
 /**
  * Recursively runs through items of provided path and returns Playlist
- * @param path {string} path to music library
+ * @param {string} directoryPath path to music library
+ * @param {Array} playlist list of album titles
  **/
-export const parseDirectory = (path: string): Playlist => {
-  const playlist: string[] = [];
-  readDirectory(path, playlist);
-  if (!playlist || !playlist.length) {
-    throw new Error(ERROR_MESSAGES.EXCLUDED_PATH);
+export const parseDirectory = (
+  directoryPath: string,
+  playlist: string[] = []
+): Playlist => {
+  try {
+    const _playlist = [...playlist];
+    const dir = fs.readdirSync(directoryPath, { withFileTypes: true });
+    if (!dir || !dir.length) {
+      return _playlist;
+    }
+
+    const albumSubdirectories = getSubdirectories(dir);
+    _playlist.push(...albumSubdirectories);
+
+    for (const directory of albumSubdirectories) {
+      const subDirs = parseDirectory(path.join(directoryPath, directory));
+      _playlist.push(...subDirs);
+    }
+
+    return _playlist;
+  } catch (error) {
+    throw parserError(error);
   }
-  return playlist;
 };

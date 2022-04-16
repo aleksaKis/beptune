@@ -4,3 +4,4 @@ data
 src/secure/spotify.ts
 tasks.md
 .idea
+coverage

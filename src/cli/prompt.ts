@@ -4,7 +4,7 @@ import { Playlist } from '../parser';
 /**
  * Prompts user for desired album from playlist and invokes onSubmit callback when album is selected
  * @param {Array} playlist array of album titles
- * @param onSubmit
+ * @param {Function} onSubmit
  **/
 export const prompt = (
   playlist: string[],

@@ -8,7 +8,7 @@ import { PromptObject } from 'prompts';
 export const APP = 'Beptune';
 
 const handleAlbumSubmit = async (
-  promptObject: PromptObject,
+  _: PromptObject,
   album: string
 ): Promise<void> => {
   await searchSpotify(album);
